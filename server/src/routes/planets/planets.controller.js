@@ -1,10 +1,10 @@
-const { planets } = require('../../model/planets.model')
+const { getAllPlanets } = require('../../model/planets.model')
 
-function getAllPlanets(req, res) {
+function httpGetAllPlanets(req, res) {
     // return ensures only one response is ever set its a good pattern to follow
-    return res.status(200).json(planets);
+    return res.status(200).json(getAllPlanets());
 }
 
 module.exports = {
-    getAllPlanets
+    httpGetAllPlanets
 };

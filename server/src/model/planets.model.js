@@ -38,8 +38,12 @@ function loadPlanetsData() {
     });
 }
 
+function getAllPlanets() {
+    return habitablePlanets;
+}
+
 // REMEMBER Node wont wait for any streams to complete before exporting
 module.exports = {
     loadPlanetsData,
-    planets: habitablePlanets
+    getAllPlanets
 };
