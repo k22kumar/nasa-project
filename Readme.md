@@ -1,0 +1,1 @@
+This is a project to help me learn and understand Express JS. This project was learned from the Udemy Zero to Mastery NodeJS Developer course.
