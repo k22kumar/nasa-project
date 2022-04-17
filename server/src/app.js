@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const planetsRouter = require('./routes/planets/planets.router');
 
 const app = express();
@@ -8,6 +9,9 @@ const app = express();
 app.use(cors({
     origin: 'http://localhost:3000'
 }));
+// logging
+app.use(morgan('combined'));
+
 // requests come in, gets checked for json type, goes through express router
 // parse any incoming json
 app.use(express.json());
