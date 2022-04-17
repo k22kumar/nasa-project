@@ -1,4 +1,7 @@
-const { getAllLaunches } = require('../../model/launches.model');
+const {
+    getAllLaunches,
+    addNewLaunch
+} = require('../../model/launches.model');
 
 function httpGetAllLaunches(req, res) {
     // the .values() method will iterate over the Map and provide just the values to us
@@ -6,6 +9,15 @@ function httpGetAllLaunches(req, res) {
     return res.status(200).json(getAllLaunches());
 };
 
+function httpAddNewLaunch(req, res) {
+    const launch = req.body;
+    launch.launchDate = new Date(launch.launchDate);
+    addNewLaunch(launch);
+    // good practice to return the new object for post
+    return res.status(201).json(launch);
+};
+
 module.exports = {
-    httpGetAllLaunches
+    httpGetAllLaunches,
+    httpAddNewLaunch
 };

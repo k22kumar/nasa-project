@@ -1,10 +1,12 @@
 const express = require('express');
 const {
-    httpGetAllLaunches
+    httpGetAllLaunches,
+    httpAddNewLaunch
 } = require('./launches.controller');
 
 const launchesRouter = express.Router();
-
-launchesRouter.get('/launches',httpGhetAllLaunches);
+// must put some string when we define endpoints even if they are already mounted on 'launches' (see note in app js)
+launchesRouter.get('/', httpGetAllLaunches);
+launchesRouter.post('/', httpAddNewLaunch);
 
 module.exports = launchesRouter;
