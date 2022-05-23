@@ -1,8 +1,8 @@
+const planets = require('./planets.mongo');
+
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse');
-
-const habitablePlanets = [];
 
 function isHabitablePlanet(planet) {
     // koi disposition is if its been observed by kepler, koi_insol is amount of stellar flux, koi_prad
@@ -24,26 +24,48 @@ function loadPlanetsData() {
             // return each row as a JS object with key value pairs
             columns: true
         }))
-            .on('data', (data) => {
-                if (isHabitablePlanet(data)) habitablePlanets.push(data);
+            .on('data', async (data) => {
+                if (isHabitablePlanet(data)) {
+                    // upsert
+                    // first arg, if it does not exist insert this object, second arg if it exists update with this obj, by default, update only updates third arg will make sure it upserts
+                    savePlanet(data);
+                }
             })
             .on('error', (err) => {
                 console.log(err);
                 reject(err);
             })
-            .on('end', () => {
-                console.log(`${habitablePlanets.length} habitable planets found!`);
+            .on('end', async () => {
+                const countPlanetsFound = (await getAllPlanets()).length;
+                console.log(`${countPlanetsFound} habitable planets found!`);
                 resolve();
             });
     });
 }
 
-function getAllPlanets() {
-    return habitablePlanets;
+async function getAllPlanets() {
+    //find first arg: filter objects based on some criteria
+    // second arg: only out put specific fields
+    return await planets.find({});
+}
+
+async function savePlanet(planet) {
+    try {
+        await planets.updateOne({
+        keplerName: planet.kepler_name
+    }, {
+        keplerName: planet.kepler_name
+    }, {
+        upsert: true
+    });
+    } catch (error) {
+        console.error(`Could not save planet ${err}`);
+    }
 }
 
 // REMEMBER Node wont wait for any streams to complete before exporting
 module.exports = {
     loadPlanetsData,
-    getAllPlanets
+    getAllPlanets,
+    savePlanet
 };

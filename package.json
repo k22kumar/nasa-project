@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/k22kumar/nasa-project/issues"
   },
-  "homepage": "https://github.com/k22kumar/nasa-project#readme"
+  "homepage": "https://github.com/k22kumar/nasa-project#readme",
+  "dependencies": {
+    "mongoose": "^6.3.0"
+  }
 }
