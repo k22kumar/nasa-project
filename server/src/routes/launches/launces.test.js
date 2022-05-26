@@ -18,7 +18,7 @@ describe('Launches API', () => {
         test('It should respond with 200 success', async () => {
             const response = await request(app)
             // requires an app object, same one from app.js
-                .get('/launches')
+                .get('/v1/launches')
                 .expect('Content-Type', /json/)
                 .expect(200);
             // Assertion, we expect a value to be ...
@@ -52,7 +52,7 @@ describe('Launches API', () => {
 
         test('It should respond with 200 sucess', () => {
             const response = await request(app)
-                .post('/launches')
+                .post('/v1/launches')
                 .send(completeLaunchData)
                 .expect('Content-Type', /json/)
                 .expect(201);
@@ -65,7 +65,7 @@ describe('Launches API', () => {
         });
         test('It should catch missing required properties', async () => {
             const response = await request(app)
-                .post('/launches')
+                .post('/v1/launches')
                 .send(launchDataWithoutDate)
                 .expect('Content-Type', /json/)
                 .expect(400);
@@ -76,7 +76,7 @@ describe('Launches API', () => {
         });
         test('It should catch invalid dates', () => {
             const response = await request(app)
-                .post('/launches')
+                .post('/v1/launches')
                 .send(launchDataWithInvalidDate)
                 .expect('Content-Type', /json/)
                 .expect(400);
